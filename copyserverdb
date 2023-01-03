@@ -1,0 +1,17 @@
+#!/bin/bash
+
+echo "copy database started"
+
+ddate=$(date +"%Y-%m-%d_09-00-01")
+
+scp user@server:/var/backups/mysql/$ddate/myunpackeddatabase.gz /yourdestinationpath
+
+gzip -d /home/acristea/myunpackeddatabase.gz
+
+#sed -i 's/oldname/newdatabasename/g' oldname
+
+mysql -u "myuser" -p "mypass" mydatabase < /home/acristea/myunpackeddatabase
+
+rm /yourdestinationpath/myunpackeddatabase
+
+echo "copy database finished"
